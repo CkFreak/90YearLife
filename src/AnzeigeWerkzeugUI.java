@@ -5,9 +5,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -29,8 +33,12 @@ public class AnzeigeWerkzeugUI
     private JPanel _checkboxPanel;
     //The productivity checkbox
     private Checkbox _checkbox;
+    //The Pannel for Save and Restore
+    private JPanel _saveAndRestorePanel;
     //The save Button
     private JButton _save;
+    //The Restore Button
+    private JButton _restore;
     //The TextFile Saver class
     private Saver _saver;
     //The String with savable data
@@ -47,10 +55,10 @@ public class AnzeigeWerkzeugUI
     {
         _buttons = new ArrayList<>();
         init(amount);
-        _colors = new Integer[amount+1];
+        _colors = new Integer[amount + 1];
         _saver = new Saver("/Users/Timbo/Desktop/90YearLife.txt");
         _data = "Nothing in here yet";
-        for (int i = 0; i < _colors.length; ++i )
+        for (int i = 0; i < _colors.length; ++i)
         {
             _colors[i] = 0;
         }
@@ -76,6 +84,9 @@ public class AnzeigeWerkzeugUI
         _buttonPanel.setLayout(new GridLayout(10, 100));
 
         _frame.add(_buttonPanel, BorderLayout.SOUTH);
+        
+        _saveAndRestorePanel = new JPanel();
+        _frame.add(_saveAndRestorePanel, BorderLayout.CENTER);
 
         _save = new JButton("Save");
         _save.addActionListener(new ActionListener()
@@ -97,12 +108,37 @@ public class AnzeigeWerkzeugUI
             }
         });
 
-        _frame.add(_save);
+        _saveAndRestorePanel.add(_save);
+        
+        _restore = new JButton("Restore");
+        _restore.addActionListener(new ActionListener()
+        {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                restoreSavedData(getFile());
+                
+            }
+        });
+        
+        _saveAndRestorePanel.add(_restore);
 
         createButtons(amount);
 
         _frame.pack();
         _frame.setVisible(true);
+    }
+
+    protected String getFile()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setVisible(true);
+        fileChooser.setDialogTitle("Choose your saveFile");
+        fileChooser.setCurrentDirectory(null);
+        fileChooser.showOpenDialog(_frame);
+        String path = fileChooser.getSelectedFile().getAbsolutePath();
+        return path;
     }
 
     /**
@@ -153,6 +189,50 @@ public class AnzeigeWerkzeugUI
             temp += String.valueOf(kurz);
         }
         return temp;
+    }
+
+    private void restoreSavedData(String filepath)
+    {
+        try
+        {
+            List<String> saveData = Files.readAllLines(Paths.get(filepath));
+            ArrayList<Character> data = new ArrayList<>();
+            
+            for(int i = 0; i < saveData.get(0).length() - 1; ++i)
+            {
+                data.add(saveData.get(0).charAt(i));
+            }
+            
+            int zaehler =  0;
+            
+            for (JButton button : _buttons)
+            {
+               switch (data.get(zaehler))
+            {
+            case '0':
+                button.setBackground(Color.red);
+                button.setOpaque(true);
+                break;
+
+            case '1':
+                button.setBackground(Color.green);
+                button.setOpaque(true);
+                break;
+            default:
+//                button.setBackground(Color.red);
+//                button.setOpaque(true);
+                break;
+            } 
+              ++zaehler; 
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println(
+                    "Computer sagt nein! Diese Datei gibt es nicht, sie ist schreibgeschützt oder etwas ist furchtbar schief gelaufen");
+            e.printStackTrace();
+        }
+        
     }
 
 }
