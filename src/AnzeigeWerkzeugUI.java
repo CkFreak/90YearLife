@@ -37,8 +37,6 @@ public class AnzeigeWerkzeugUI
     private String _data;
     //An Array with values of 1 and 0 for the color code of the buttons
     private Integer[] _colors;
-    //A counter for private and unsupportable reasons
-    private int _i;
 
     /**
      * Initializes the Window
@@ -113,11 +111,11 @@ public class AnzeigeWerkzeugUI
      */
     private void createButtons(int amount)
     {
-        for (_i = 0; _i < amount; ++_i)
+        for (int i = 0; i < amount; ++i)
         {
-            _buttons.add(new JButton("Button" + _i));
-            JButton temp = _buttons.get(_i);
-            _buttons.get(_i)
+            _buttons.add(new JButton("Button" + i));
+            JButton temp = _buttons.get(i);
+            _buttons.get(i)
                 .addActionListener(new ActionListener()
                 {
 
@@ -128,17 +126,17 @@ public class AnzeigeWerkzeugUI
                         {
                             temp.setBackground(Color.green);
                             temp.setOpaque(true);
-                            _colors[_i] = 1;
+                            _colors[_buttons.indexOf(temp)] = 1;
                         }
                         else
                         {
                             temp.setBackground(Color.red);
                             temp.setOpaque(true);
-                            _colors[_i] = 0;
+                            _colors[_buttons.indexOf(temp)] = 0;
                         }
                     }
                 });
-            _buttonPanel.add(_buttons.get(_i));
+            _buttonPanel.add(_buttons.get(i));
         }
 
     }
