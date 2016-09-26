@@ -37,8 +37,6 @@ public class AnzeigeWerkzeugUI
     private String _data;
     //An Array with values of 1 and 0 for the color code of the buttons
     private Integer[] _colors;
-    //Boolean to determine whether of not the Button was clicked
-    private boolean _clicked;
     //A counter for private and unsupportable reasons
     private int _i;
 
@@ -52,7 +50,6 @@ public class AnzeigeWerkzeugUI
         _buttons = new ArrayList<>();
         init(amount);
         _colors = new Integer[amount+1];
-        _clicked = false;
         _saver = new Saver("/Users/Timbo/Desktop/90YearLife.txt");
         _data = "Nothing in here yet";
         for (int i = 0; i < _colors.length; ++i )
@@ -131,7 +128,6 @@ public class AnzeigeWerkzeugUI
                         {
                             temp.setBackground(Color.green);
                             temp.setOpaque(true);
-                            _clicked = true;
                             _colors[_i] = 1;
                         }
                         else
