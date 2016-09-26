@@ -226,12 +226,12 @@ public class AnzeigeWerkzeugUI
               ++zaehler; 
             }
         }
-        catch (IOException x)
+        catch (IOException e)
         {
             System.out.println(
                     "Computer sagt nein! Diese Datei gibt es nicht, sie ist schreibgeschützt oder etwas ist furchtbar schief gelaufen"
                     + " Es ist auch möglich, dass keine Datei ausgewählt wurde.");
-            x.printStackTrace();
+            e.printStackTrace();
         }
         
     }
