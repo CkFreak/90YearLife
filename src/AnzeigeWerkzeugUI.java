@@ -130,15 +130,15 @@ public class AnzeigeWerkzeugUI
         _frame.setVisible(true);
     }
 
-    protected String getFile()
+    private String getFile()
     {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setVisible(true);
-        fileChooser.setDialogTitle("Choose your saveFile");
-        fileChooser.setCurrentDirectory(null);
-        fileChooser.showOpenDialog(_frame);
-        String path = fileChooser.getSelectedFile().getAbsolutePath();
-        return path;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Choose your saveFile");
+            fileChooser.setCurrentDirectory(null);
+            fileChooser.showOpenDialog(_frame);
+            fileChooser.setVisible(true);
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            return path;
     }
 
     /**
@@ -226,11 +226,12 @@ public class AnzeigeWerkzeugUI
               ++zaehler; 
             }
         }
-        catch (IOException e)
+        catch (IOException x)
         {
             System.out.println(
-                    "Computer sagt nein! Diese Datei gibt es nicht, sie ist schreibgeschützt oder etwas ist furchtbar schief gelaufen");
-            e.printStackTrace();
+                    "Computer sagt nein! Diese Datei gibt es nicht, sie ist schreibgeschützt oder etwas ist furchtbar schief gelaufen"
+                    + " Es ist auch möglich, dass keine Datei ausgewählt wurde.");
+            x.printStackTrace();
         }
         
     }
