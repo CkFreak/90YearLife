@@ -1,3 +1,4 @@
+package werkzeuge;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Color;
@@ -15,13 +16,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import services.Saver;
+
 /**
  * This is the class that represents the applications main window with all the buttons. 
  * @author Marc Blaesche
  * @version 16.6.2016
  *
  */
-public class AnzeigeWerkzeugUI
+public class JahrAuswaehlWerkzeugUI
 {
     //The main JFrame that displays the Window of the application
     private JFrame _frame;
@@ -51,7 +54,7 @@ public class AnzeigeWerkzeugUI
      * @param amount Number of Buttons
      * @throws IOException 
      */
-    public AnzeigeWerkzeugUI(int amount) throws IOException
+    public JahrAuswaehlWerkzeugUI(int amount) throws IOException
     {
         _buttons = new ArrayList<>();
         init(amount);
@@ -60,7 +63,7 @@ public class AnzeigeWerkzeugUI
         _data = "Nothing in here yet";
         for (int i = 0; i < _colors.length; ++i)
         {
-            _colors[i] = 0;
+            _colors[i] = 3;
         }
     }
 
@@ -71,9 +74,9 @@ public class AnzeigeWerkzeugUI
     private void init(int amount)
     {
         _frame = new JFrame("Your 90 Year Life! Have you reached your goals?");
-        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        _checkbox = new Checkbox("Productive");
+        _checkbox = new Checkbox("I was productive!");
 
         _checkboxPanel = new JPanel();
         _checkboxPanel.add(_checkbox);
@@ -149,7 +152,7 @@ public class AnzeigeWerkzeugUI
     {
         for (int i = 0; i < amount; ++i)
         {
-            _buttons.add(new JButton("Button" + i));
+            _buttons.add(new JButton("Age " + String.valueOf(i + 1)));
             JButton temp = _buttons.get(i);
             _buttons.get(i)
                 .addActionListener(new ActionListener()
@@ -158,18 +161,8 @@ public class AnzeigeWerkzeugUI
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        if (_checkbox.getState())
-                        {
-                            temp.setBackground(Color.green);
-                            temp.setOpaque(true);
-                            _colors[_buttons.indexOf(temp)] = 1;
-                        }
-                        else
-                        {
-                            temp.setBackground(Color.red);
-                            temp.setOpaque(true);
-                            _colors[_buttons.indexOf(temp)] = 0;
-                        }
+                        WochenauswahlWerkzeugUI ui = new WochenauswahlWerkzeugUI();
+                        _frame.setVisible(false);
                     }
                 });
             _buttonPanel.add(_buttons.get(i));
@@ -216,6 +209,10 @@ public class AnzeigeWerkzeugUI
 
             case '1':
                 button.setBackground(Color.green);
+                button.setOpaque(true);
+                break;
+            case '3':
+                button.setBackground(null);
                 button.setOpaque(true);
                 break;
             default:
