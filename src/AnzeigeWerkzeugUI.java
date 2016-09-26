@@ -55,6 +55,10 @@ public class AnzeigeWerkzeugUI
         _clicked = false;
         _saver = new Saver("/Users/Timbo/Desktop/90YearLife.txt");
         _data = "Nothing in here yet";
+        for (int i = 0; i < _colors.length; ++i )
+        {
+            _colors[i] = 0;
+        }
     }
 
     /**
