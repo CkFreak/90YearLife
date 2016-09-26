@@ -219,8 +219,8 @@ public class AnzeigeWerkzeugUI
                 button.setOpaque(true);
                 break;
             default:
-//                button.setBackground(Color.red);
-//                button.setOpaque(true);
+                button.setBackground(Color.blue);
+                button.setOpaque(true);
                 break;
             } 
               ++zaehler; 
